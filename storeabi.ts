@@ -8,7 +8,13 @@ export const StoreAbi = [
 			}
 		],
 		"name": "mintNode",
-		"outputs": [],
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
 		"stateMutability": "payable",
 		"type": "function"
 	},

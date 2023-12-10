@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { ExternalProvider } from "@ethersproject/providers";
 import $ from 'jquery';
 
-const contractAddress = '0xe7f0f1585bdbd06b18dbb87099b87bd79bbd315b';
+const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
 
 let signer;
 let provider;
@@ -81,9 +81,10 @@ $("#mbtn").on("click", function() {
 
             if (address && amount && address?.toString().length > 0 && amount?.toString().length > 0) {
                 try {
-                    var fee = 40000000000000000;
-                    var totalFee = fee * parseInt(amount?.toString());
-                    const options = {value: ethers.BigNumber.from(totalFee)};
+                    var amt = parseInt(amount?.toString())
+                    var fee = ethers.BigNumber.from("40000000000000000");
+                    const options = {value: fee.mul(amt)};
+                    console.log(options);
                     var tx = await contract.mintNode(address, options);
                     await tx.wait()
                 } catch (e: any) {
