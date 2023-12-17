@@ -51,6 +51,18 @@ const start = async () => {
             contract.connect(provider);
         }
     }
+
+    $.getJSON("https://node.anote.digital/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
+        $("#nodePrice").val((data.value / 100).toFixed(2));
+    });
+
+    $.getJSON("https://node.anote.digital/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
+        $("#nodeTier").val(data.value);
+    });
+
+    $.getJSON("https://node.anote.digital/assets/balance/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/auiheGJjoLj6B41v6GChAeCzEUaj2UDFu5rDqbfNHew", function(data) {
+        $("#nodeTotal").val(data.balance);
+    });
 };
 
 if (window.ethereum == null || window.ethereum == undefined) {
