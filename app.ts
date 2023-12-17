@@ -82,7 +82,7 @@ $("#mbtn").on("click", function() {
             if (address && amount && address?.toString().length > 0 && amount?.toString().length > 0) {
                 try {
                     var amt = parseInt(amount?.toString())
-                    var fee = ethers.BigNumber.from("40000000000000000");
+                    var fee = ethers.BigNumber.from("50000000000000000");
                     const options = {value: fee.mul(amt)};
                     console.log(options);
                     var tx = await contract.mintNode(address, options);
@@ -112,7 +112,7 @@ $("#amount").on("keyup", function() {
     var amount = $("#amount").val();
 
     if (amount && amount?.toString().length > 0) {
-        var total = parseFloat(amount?.toString()) * 0.04;
+        var total = parseFloat(amount?.toString()) * 0.05;
         $("#total").html(total.toFixed(2));
     } else {
         $("#total").html("0.00");
