@@ -81,9 +81,11 @@ $("#mbtn").on("click", function() {
 
             if (address && amount && address?.toString().length > 0 && amount?.toString().length > 0) {
                 try {
-                    var amt = parseInt(amount?.toString())
-                    var fee = ethers.BigNumber.from("50000000000000000");
-                    const options = {value: fee.mul(amt)};
+                    var amt = parseInt(amount?.toString());
+                    var total = await calculateTotal(amt);
+                    var totalBig = ethers.BigNumber.from(parseInt((total * 100)?.toString()));
+                    var fee = ethers.BigNumber.from("10000000000000000");
+                    const options = {value: fee.mul(ethers.BigNumber.from(totalBig))};
                     console.log(options);
                     var tx = await contract.mintNode(address, options);
                     await tx.wait()
@@ -110,6 +112,18 @@ $("#mbtn").on("click", function() {
 
 $("#amount").on("keyup", async function() {
     var amount = $("#amount").val();
+
+    if (amount && amount?.toString().length > 0) {
+        var amountInt = parseInt(amount?.toString());
+        var total = await calculateTotal(amountInt);
+
+        $("#total").html(total.toFixed(2));
+    } else {
+        $("#total").html("0.00");
+    }
+});
+
+async function calculateTotal(amountInt) {
     var nodePrice = 0;
     var nodeTier = 0;
 
@@ -121,29 +135,22 @@ $("#amount").on("keyup", async function() {
         nodeTier = data.value;
     });
 
-    if (amount && amount?.toString().length > 0) {
-        var amountInt = parseInt(amount?.toString());
-        var total = 0;
+    var total = 0;
 
-        if (nodeTier >= amountInt) {
-            total = parseFloat(amount?.toString()) * nodePrice;
-        } else {
-            while (amountInt > 0) {
-                total += nodeTier * nodePrice;
-                amountInt -= nodeTier;
-                if (amountInt > 10) {
-                    nodeTier = 10;
-                } else {
-                    nodeTier = amountInt;
-                }
-                nodePrice += 0.01;
-            }
-        }
-        console.log(nodePrice);
-        console.log(nodeTier);
-
-        $("#total").html(total.toFixed(2));
+    if (nodeTier >= amountInt) {
+        total = parseFloat(amountInt) * nodePrice;
     } else {
-        $("#total").html("0.00");
+        while (amountInt > 0) {
+            total += nodeTier * nodePrice;
+            amountInt -= nodeTier;
+            if (amountInt > 10) {
+                nodeTier = 10;
+            } else {
+                nodeTier = amountInt;
+            }
+            nodePrice += 0.01;
+        }
     }
-});
+
+    return total;
+}
