@@ -108,11 +108,40 @@ $("#mbtn").on("click", function() {
     }
 });
 
-$("#amount").on("keyup", function() {
+$("#amount").on("keyup", async function() {
     var amount = $("#amount").val();
+    var nodePrice = 0;
+    var nodeTier = 0;
+
+    await $.getJSON("https://node.anote.digital/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
+        nodePrice = data.value / 100;
+    });
+
+    await $.getJSON("https://node.anote.digital/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
+        nodeTier = data.value;
+    });
 
     if (amount && amount?.toString().length > 0) {
-        var total = parseFloat(amount?.toString()) * 0.05;
+        var amountInt = parseInt(amount?.toString());
+        var total = 0;
+
+        if (nodeTier >= amountInt) {
+            total = parseFloat(amount?.toString()) * nodePrice;
+        } else {
+            while (amountInt > 0) {
+                total += nodeTier * nodePrice;
+                amountInt -= nodeTier;
+                if (amountInt > 10) {
+                    nodeTier = 10;
+                } else {
+                    nodeTier = amountInt;
+                }
+                nodePrice += 0.01;
+            }
+        }
+        console.log(nodePrice);
+        console.log(nodeTier);
+
         $("#total").html(total.toFixed(2));
     } else {
         $("#total").html("0.00");
