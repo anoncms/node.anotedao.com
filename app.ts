@@ -52,15 +52,15 @@ const start = async () => {
         }
     }
 
-    $.getJSON("https://nodes.anotedao.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
+    $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
         $("#nodePrice").val((data.value / 100).toFixed(2));
     });
 
-    $.getJSON("https://nodes.anotedao.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
+    $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
         $("#nodeTier").val(data.value);
     });
 
-    $.getJSON("https://nodes.anotedao.com/assets/balance/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/auiheGJjoLj6B41v6GChAeCzEUaj2UDFu5rDqbfNHew", function(data) {
+    $.getJSON("https://nodes.aintchain.com/assets/balance/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/auiheGJjoLj6B41v6GChAeCzEUaj2UDFu5rDqbfNHew", function(data) {
         $("#nodeTotal").val(data.balance);
     });
 };
@@ -139,11 +139,11 @@ async function calculateTotal(amountInt) {
     var nodePrice = 0;
     var nodeTier = 0;
 
-    await $.getJSON("https://nodes.anotedao.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
+    await $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
         nodePrice = data.value / 100;
     });
 
-    await $.getJSON("https://nodes.anotedao.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
+    await $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
         nodeTier = data.value;
     });
 
