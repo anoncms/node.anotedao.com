@@ -152,6 +152,7 @@ async function calculateTotal(amountInt) {
 }
 
 window.addEventListener("load", (event) => {
+    alert(window.ethereum);
   if (typeof window?.ethereum == null || typeof window?.ethereum == "undefined") {
         $("#loading").fadeOut(function() {
             $("#error").fadeIn();
