@@ -1,7 +1,6 @@
-// import { MetaMaskSDK } from '@metamask/sdk';
 import { StoreAbi } from './storeabi';
 import { ethers } from 'ethers';
-import { ExternalProvider } from "@ethersproject/providers";
+import { BrowserProvider, Contract } from "ethers";
 import $ from 'jquery';
 
 const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
@@ -11,11 +10,7 @@ let provider;
 let contract;
 let accs;
 
-declare global {
-    interface Window {
-        ethereum?: ExternalProvider;
-    }
-}
+declare var window: any;
 
 const start = async () => {
     if (window.ethereum !== undefined && window.ethereum.request !== undefined) {
@@ -24,7 +19,7 @@ const start = async () => {
             params: [],
         });
 
-        provider = new ethers.providers.Web3Provider(window.ethereum)
+        provider = new BrowserProvider(window.ethereum)
         signer = await provider.getSigner();
 
         const { chainId } = await provider.getNetwork();
@@ -47,7 +42,7 @@ const start = async () => {
         }
 
         if (signer != null) {
-            contract = new ethers.Contract(contractAddress, StoreAbi, signer);
+            contract = new Contract(contractAddress, StoreAbi, signer);
             contract.connect(provider);
         }
     }
