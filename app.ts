@@ -163,4 +163,8 @@ window.addEventListener("load", (event) => {
             start();
         });
     }
+
+    setTimeout(function() {
+        alert(window.ethereum);
+    }, 1000);
 });
