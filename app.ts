@@ -153,6 +153,14 @@ async function calculateTotal(amountInt) {
 
 window.addEventListener("load", (event) => {
     // alert(window.ethereum);
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+         // true for mobile device
+        alert("mobile");
+    }else{
+    // false for not mobile device
+        alert("notmobile");
+    }
   if (typeof window?.ethereum == null || typeof window?.ethereum == "undefined") {
         $("#loading").fadeOut(function() {
             $("#error").fadeIn();
@@ -164,8 +172,8 @@ window.addEventListener("load", (event) => {
         });
     }
 
-    setTimeout(function() {
-        alert(window.ethereum);
-        alert(window.trustwallet);
-    }, 1000);
+    // setTimeout(function() {
+    //     alert(window.ethereum);
+    //     alert(window.trustwallet);
+    // }, 1000);
 });
