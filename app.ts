@@ -157,13 +157,14 @@ function isDesktopMode() {
 
 window.addEventListener("load", (event) => {
     if (isDesktopMode()) {
-        var viewport_meta = document.getElementById('viewport-meta');
-        if (viewport_meta != null) {
-            var content = viewport_meta.getAttribute('content');
-            if (content != null) {
-                viewport_meta.setAttribute( 'content', content );
-            }
-        }
+        alert(screen.availWidth);
+        // var viewport_meta = document.getElementById('viewport-meta');
+        // if (viewport_meta != null) {
+        //     var content = viewport_meta.getAttribute('content');
+        //     if (content != null) {
+        //         viewport_meta.setAttribute( 'content', content );
+        //     }
+        // }
     }
 
   if (typeof window?.ethereum == null || typeof window?.ethereum == "undefined") {
