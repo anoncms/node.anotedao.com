@@ -65,17 +65,6 @@ const start = async () => {
     });
 };
 
-if (window.ethereum == null || window.ethereum == undefined) {
-    $("#loading").fadeOut(function() {
-        $("#error").fadeIn();
-    });
-} else {
-    $("#loading").fadeOut(function() {
-        $("#success").fadeIn();
-        start();
-    });
-}
-
 $("#mbtn").on("click", function() {
     $("#errMsg").fadeOut(function() {
         $("#errMsg").html('');
@@ -166,3 +155,16 @@ async function calculateTotal(amountInt) {
 
     return total;
 }
+
+window.addEventListener("load", (event) => {
+  if (window.ethereum == null || window.ethereum == undefined) {
+        $("#loading").fadeOut(function() {
+            $("#error").fadeIn();
+        });
+    } else {
+        $("#loading").fadeOut(function() {
+            $("#success").fadeIn();
+            start();
+        });
+    }
+});
