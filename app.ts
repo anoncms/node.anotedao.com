@@ -166,5 +166,6 @@ window.addEventListener("load", (event) => {
 
     setTimeout(function() {
         alert(window.ethereum);
+        alert(window.trustwallet);
     }, 1000);
 });
