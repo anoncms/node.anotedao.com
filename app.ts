@@ -156,7 +156,10 @@ function isDesktopMode() {
 }
 
 window.addEventListener("load", (event) => {
-    alert(isDesktopMode());
+    if (isDesktopMode()) {
+        window.innerWidth = screen.availWidth;
+        window.innerHeight = screen.availHeight;
+    }
 
   if (typeof window?.ethereum == null || typeof window?.ethereum == "undefined") {
         $("#loading").fadeOut(function() {
