@@ -1,5 +1,5 @@
-import { StoreAbi } from './storeabi';
 import { ethers } from 'ethers';
+import { StoreAbi } from './storeabi';
 import { BrowserProvider, Contract } from "ethers";
 import $ from 'jquery';
 
@@ -10,7 +10,7 @@ let provider;
 let contract;
 let accs;
 
-// declare var window: any;
+declare var window: any;
 
 const start = async () => {
     if (window.ethereum !== undefined && window.ethereum.request !== undefined) {
