@@ -151,16 +151,13 @@ async function calculateTotal(amountInt) {
     return total;
 }
 
-window.addEventListener("load", (event) => {
-    // alert(window.ethereum);
+function isDesktopMode() {
+    return window.innerWidth > screen.availWidth;
+}
 
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-         // true for mobile device
-        alert("mobile");
-    }else{
-    // false for not mobile device
-        alert("notmobile");
-    }
+window.addEventListener("load", (event) => {
+    alert(isDesktopMode());
+
   if (typeof window?.ethereum == null || typeof window?.ethereum == "undefined") {
         $("#loading").fadeOut(function() {
             $("#error").fadeIn();
