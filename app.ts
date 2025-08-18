@@ -15,7 +15,7 @@ let accs;
 let params = [{
     chainId: "0x38",
     rpcUrls: ["https://bsc-dataseed.binance.org"],
-    chainName: "BSC Mainnet",
+    chainName: "BNB Smart Chain Mainnet",
     nativeCurrency: {
         name: "BNB",
         symbol: "BNB",
