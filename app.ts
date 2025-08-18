@@ -46,7 +46,7 @@ const start = async () => {
     if (window.ethereum !== undefined && window.ethereum.request !== undefined) {
         accs = await window.ethereum.request({
             method: 'eth_requestAccounts',
-            params: params,
+            params: [],
         });
 
         provider = new ethers.providers.Web3Provider(window.ethereum)
