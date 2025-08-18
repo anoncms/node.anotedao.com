@@ -4,8 +4,8 @@ import { ethers } from 'ethers';
 import { ExternalProvider } from "@ethersproject/providers";
 import $ from 'jquery';
 
-// const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
-const contractAddress = '0xd62E0E2E25270DB6Ba98D77Dd287D275dA6aD6d6';
+const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
+// const contractAddress = '0xd62E0E2E25270DB6Ba98D77Dd287D275dA6aD6d6';
 
 let signer;
 let provider;
@@ -46,7 +46,7 @@ const start = async () => {
     if (window.ethereum !== undefined && window.ethereum.request !== undefined) {
         accs = await window.ethereum.request({
             method: 'eth_requestAccounts',
-            params: paramsTestnet,
+            params: params,
         });
 
         provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -54,11 +54,11 @@ const start = async () => {
 
         const { chainId } = await provider.getNetwork();
         console.log(chainId);
-        // if (chainId != 56) {
-        if (chainId != 560048) {
+        if (chainId != 56) {
+        // if (chainId != 560048) {
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
-                params: paramsTestnet
+                params: params
             });
             window.location.href = "./";
         }
