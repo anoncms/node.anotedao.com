@@ -121,7 +121,7 @@ $("#mbtn").on("click", function() {
                     await tx.wait()
                 } catch (e: any) {
                     console.log(e);
-                    $("#errMsg").html(e.message);
+                    $("#errMsg").html(e.data.message);
                     $("#errMsg").show();
                 }
             }
