@@ -1,6 +1,7 @@
-import { ethers } from 'ethers';
+// import { MetaMaskSDK } from '@metamask/sdk';
 import { StoreAbi } from './storeabi';
-import { BrowserProvider, Contract } from "ethers";
+import { ethers } from 'ethers';
+import { ExternalProvider } from "@ethersproject/providers";
 import $ from 'jquery';
 
 // const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
@@ -24,31 +25,37 @@ let params = [{
 }];
 
 let paramsTestnet = [{
-    chainId: "0x896c0",
-    rpcUrls: ["rpc.hoodi.ethpandaops.io"],
+    chainId: "0x88bb0",
+    rpcUrls: ["https://rpc.hoodi.ethpandaops.io"],
     chainName: "Hoodi",
     nativeCurrency: {
-        name: "HodBNB",
-        symbol: "HodBNB",
+        name: "ETH",
+        symbol: "ETH",
         decimals: 18
     },
     blockExplorerUrls: ["https://hoodi.etherscan.io/"]
 }];
 
-declare var window: any;
+declare global {
+    interface Window {
+        ethereum?: ExternalProvider;
+    }
+}
 
 const start = async () => {
     if (window.ethereum !== undefined && window.ethereum.request !== undefined) {
         accs = await window.ethereum.request({
             method: 'eth_requestAccounts',
-            params: [],
+            params: paramsTestnet,
         });
 
-        provider = new BrowserProvider(window.ethereum)
+        provider = new ethers.providers.Web3Provider(window.ethereum)
         signer = await provider.getSigner();
 
         const { chainId } = await provider.getNetwork();
-        if (chainId != 56) {
+        console.log(chainId);
+        // if (chainId != 56) {
+        if (chainId != 560048) {
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
                 params: paramsTestnet
@@ -57,7 +64,7 @@ const start = async () => {
         }
 
         if (signer != null) {
-            contract = new Contract(contractAddress, StoreAbi, signer);
+            contract = new ethers.Contract(contractAddress, StoreAbi, signer);
             contract.connect(provider);
         }
     }
@@ -74,6 +81,17 @@ const start = async () => {
         $("#nodeTotal").val(data.balance);
     });
 };
+
+if (window.ethereum == null || window.ethereum == undefined) {
+    $("#loading").fadeOut(function() {
+        $("#error").fadeIn();
+    });
+} else {
+    $("#loading").fadeOut(function() {
+        $("#success").fadeIn();
+        start();
+    });
+}
 
 $("#mbtn").on("click", function() {
     $("#errMsg").fadeOut(function() {
@@ -94,10 +112,11 @@ $("#mbtn").on("click", function() {
                 try {
                     var amt = parseInt(amount?.toString());
                     var total = await calculateTotal(amt);
-                    var totalBig = BigInt(parseInt((total * 100)?.toString()));
-                    var fee = BigInt("10000000000000000");
-                    const options = {value: fee * totalBig};
-                    console.log(options);
+                    var totalBig = ethers.BigNumber.from(parseInt((total * 100)?.toString()));
+                    var fee = ethers.BigNumber.from("10000000000000000");
+                    // const options = {value: fee.mul(ethers.BigNumber.from(totalBig)), gasLimit: 3000000, gasPrice: 500000};
+                    const options = {value: fee.mul(ethers.BigNumber.from(totalBig))};
+                    console.log(options.value.toString());
                     var tx = await contract.mintNode(address, options);
                     await tx.wait()
                 } catch (e: any) {
@@ -165,37 +184,3 @@ async function calculateTotal(amountInt) {
 
     return total;
 }
-
-function isDesktopMode() {
-    return window.innerWidth > screen.availWidth;
-}
-
-window.addEventListener("load", (event) => {
-    // if (isDesktopMode()) {
-    //     alert(screen.availWidth);
-    //     // document.body.wid
-    //     var viewport_meta = document.getElementById('viewport-meta');
-    //     if (viewport_meta != null) {
-    //         var content = 'width=' + screen.availWidth.toString();
-    //         if (content != null) {
-    //             viewport_meta.setAttribute( 'content', content );
-    //         }
-    //     }
-    // }
-
-  if (typeof window?.ethereum == null || typeof window?.ethereum == "undefined") {
-        $("#loading").fadeOut(function() {
-            $("#error").fadeIn();
-        });
-    } else {
-        $("#loading").fadeOut(function() {
-            $("#success").fadeIn();
-            start();
-        });
-    }
-
-    // setTimeout(function() {
-    //     alert(window.ethereum);
-    //     alert(window.trustwallet);
-    // }, 1000);
-});
