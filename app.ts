@@ -3,12 +3,37 @@ import { StoreAbi } from './storeabi';
 import { BrowserProvider, Contract } from "ethers";
 import $ from 'jquery';
 
-const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
+// const contractAddress = '0xa174e60ef8b3b1fa7c71bb91d685191e915baaed';
+const contractAddress = '0xd62E0E2E25270DB6Ba98D77Dd287D275dA6aD6d6';
 
 let signer;
 let provider;
 let contract;
 let accs;
+
+let params = [{
+    chainId: "0x38",
+    rpcUrls: ["https://bsc-dataseed.binance.org"],
+    chainName: "BSC Mainnet",
+    nativeCurrency: {
+        name: "BNB",
+        symbol: "BNB",
+        decimals: 18
+    },
+    blockExplorerUrls: ["https://bscscan.com"]
+}];
+
+let paramsTestnet = [{
+    chainId: "0x896c0",
+    rpcUrls: ["rpc.hoodi.ethpandaops.io"],
+    chainName: "Hoodi",
+    nativeCurrency: {
+        name: "HodBNB",
+        symbol: "HodBNB",
+        decimals: 18
+    },
+    blockExplorerUrls: ["https://hoodi.etherscan.io/"]
+}];
 
 declare var window: any;
 
@@ -26,17 +51,7 @@ const start = async () => {
         if (chainId != 56) {
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
-                params: [{
-                    chainId: "0x38",
-                    rpcUrls: ["https://bsc-dataseed.binance.org"],
-                    chainName: "BSC Mainnet",
-                    nativeCurrency: {
-                        name: "BNB",
-                        symbol: "BNB",
-                        decimals: 18
-                    },
-                    blockExplorerUrls: ["https://bscscan.com"]
-                }]
+                params: paramsTestnet
             });
             window.location.href = "./";
         }
