@@ -71,7 +71,7 @@ const start = async () => {
     }
 
     $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
-        $("#nodePrice").val((data.value / 1000).toFixed(2));
+        $("#nodePrice").val((data.value / 1000).toFixed(3));
     });
 
     $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
@@ -148,7 +148,7 @@ $("#amount").on("keyup", async function() {
         var amountInt = parseInt(amount?.toString());
         var total = await calculateTotal(amountInt);
 
-        $("#total").html(total.toFixed(2));
+        $("#total").html(total.toFixed(3));
     } else {
         $("#total").html("0.00");
     }
