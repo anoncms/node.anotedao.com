@@ -159,7 +159,7 @@ async function calculateTotal(amountInt) {
     var nodeTier = 0;
 
     await $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodePrice", function(data) {
-        nodePrice = data.value / 100;
+        nodePrice = data.value / 1000;
     });
 
     await $.getJSON("https://nodes.aintchain.com/addresses/data/3AQT89sRrWHqPSwrpfJAj3Yey7BCBTAy4jT/%25s__nodeTier", function(data) {
