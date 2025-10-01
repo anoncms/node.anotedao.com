@@ -179,7 +179,7 @@ async function calculateTotal(amountInt) {
             } else {
                 nodeTier = amountInt;
             }
-            nodePrice += 0.01;
+            nodePrice += 0.001;
         }
     }
 
