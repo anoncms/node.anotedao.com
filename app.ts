@@ -113,8 +113,8 @@ $("#mbtn").on("click", function() {
                 try {
                     var amt = parseInt(amount?.toString());
                     var total = await calculateTotal(amt);
-                    var totalBig = ethers.BigNumber.from(parseInt((total * 100)?.toString()));
-                    var fee = ethers.BigNumber.from("10000000000000000");
+                    var totalBig = ethers.BigNumber.from(parseInt((total * 1000)?.toString()));
+                    var fee = ethers.BigNumber.from("1000000000000000");
                     // const options = {value: fee.mul(ethers.BigNumber.from(totalBig)), gasLimit: 3000000, gasPrice: 500000};
                     const options = {value: fee.mul(ethers.BigNumber.from(totalBig))};
                     console.log(options.value.toString());
